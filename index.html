@@ -1,0 +1,1444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GEOMETRY | The Beautiful Universe of Shapes</title>
+    <style>
+        :root {
+            --primary: #2a2f4f;
+            --secondary: #917fb3;
+            --accent: #fde2f3;
+            --light: #f5f5f7;
+            --dark: #121212;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--dark);
+            color: var(--light);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        h1 {
+            font-size: 5rem;
+            background: linear-gradient(90deg, var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            padding-bottom: 1rem;
+        }
+        
+        h2 {
+            font-size: 3rem;
+            color: var(--secondary);
+        }
+        
+        h3 {
+            font-size: 2rem;
+            color: var(--accent);
+        }
+        
+        p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            max-width: 800px;
+        }
+        
+        a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        a:hover {
+            color: var(--secondary);
+        }
+        
+        /* Layout Components */
+        .container {
+            width: 90%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 0;
+        }
+        
+        section {
+            padding: 6rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .flex-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+        
+        .col-50 {
+            flex-basis: 48%;
+            min-width: 300px;
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(18, 18, 18, 0.95);
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .logo-shape {
+            width: 2rem;
+            height: 2rem;
+            background-color: var(--accent);
+            transform: rotate(45deg);
+            display: inline-block;
+        }
+        
+        .nav-list {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        
+        .nav-link {
+            position: relative;
+            font-weight: 500;
+            padding: 0.5rem 0;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--light);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            background-color: var(--dark);
+        }
+        
+        .video-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.6;
+            z-index: -1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: var(--accent);
+        }
+        
+        .cta-btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: var(--light);
+            border-radius: 4px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-right: 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+            transition: all 0.3s ease;
+        }
+        
+        .cta-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            color: var(--light);
+        }
+        
+        .cta-secondary {
+            background: transparent;
+            border: 2px solid var(--secondary);
+        }
+        
+        /* About Section */
+        .about {
+            background-color: var(--primary);
+            clip-path: polygon(0 0, 100% 5%, 100% 95%, 0 100%);
+            margin: 4rem 0;
+        }
+        
+        .about-image {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        }
+        
+        .shape-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .shape-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .shape-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            background-color: rgba(255, 255, 255, 0.08);
+        }
+        
+        .shape-icon {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+        
+        /* Feature Section */
+        .features {
+            background-color: var(--dark);
+            position: relative;
+        }
+        
+        .feature-card {
+            background: linear-gradient(135deg, rgba(42, 47, 79, 0.7), rgba(18, 18, 18, 0.9));
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.3);
+        }
+        
+        .feature-icon {
+            width: 4rem;
+            height: 4rem;
+            background-color: var(--secondary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            color: var(--light);
+        }
+        
+        /* Gallery Section */
+        .gallery {
+            background-color: var(--primary);
+            clip-path: polygon(0 10%, 100% 0, 100% 90%, 0 100%);
+            padding: 10rem 0;
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+        
+        .gallery-item {
+            height: 300px;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .gallery-item:hover {
+            transform: scale(1.05);
+            z-index: 5;
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+        }
+        
+        .gallery-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.5s ease;
+        }
+        
+        .gallery-item:hover .gallery-img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+        
+        /* Interactive Section */
+        .interactive {
+            background-color: var(--dark);
+            position: relative;
+        }
+        
+        .canvas-container {
+            width: 100%;
+            height: 500px;
+            background-color: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            margin: 3rem 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        .controls {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+        
+        .control-btn {
+            padding: 0.8rem 1.5rem;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 4px;
+            color: var(--light);
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .control-btn:hover {
+            background-color: var(--secondary);
+        }
+        
+        /* Timeline Section */
+        .timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 3rem auto;
+        }
+        
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background-color: var(--secondary);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+            border-radius: 12px;
+        }
+        
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+        
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+        
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+        
+        .timeline-content {
+            padding: 2rem;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+        }
+        
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+            background-color: rgba(255, 255, 255, 0.08);
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            background-color: var(--accent);
+            border-radius: 50%;
+            top: 24px;
+            z-index: 1;
+        }
+        
+        .timeline-item:nth-child(odd)::after {
+            right: -12px;
+        }
+        
+        .timeline-item:nth-child(even)::after {
+            left: -12px;
+        }
+        
+        .timeline-date {
+            color: var(--accent);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        /* Applications Section */
+        .applications {
+            background-color: var(--primary);
+            clip-path: polygon(0 0, 100% 10%, 100% 100%, 0 90%);
+            padding: 12rem 0 6rem;
+        }
+        
+        .app-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .app-card {
+            background: linear-gradient(135deg, rgba(42, 47, 79, 0.8), rgba(18, 18, 18, 0.95));
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .app-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+        }
+        
+        .app-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .app-content {
+            padding: 2rem;
+        }
+        
+        .app-icon {
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+        
+        /* Contact Section */
+        .contact {
+            background-color: var(--dark);
+            position: relative;
+        }
+        
+        .contact-form {
+            width: 100%;
+            max-width: 600px;
+            margin: 3rem auto;
+            background: linear-gradient(135deg, rgba(42, 47, 79, 0.7), rgba(18, 18, 18, 0.9));
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--accent);
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 1rem;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            color: var(--light);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--secondary);
+            background-color: rgba(255, 255, 255, 0.08);
+        }
+        
+        .form-textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .form-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            border: none;
+            border-radius: 4px;
+            color: var(--light);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .form-btn:hover {
+            background: linear-gradient(45deg, var(--secondary), var(--primary));
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--primary);
+            padding: 4rem 0 2rem;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .footer-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-link {
+            margin-bottom: 0.8rem;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            background-color: var(--secondary);
+            transform: translateY(-5px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+        
+        /* Animation Classes */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+        
+        .fade-in.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Geometric Shapes */
+        .shape {
+            position: absolute;
+            z-index: -1;
+            opacity: 0.15;
+        }
+        
+        .shape-1 {
+            top: 10%;
+            left: 5%;
+            width: 300px;
+            height: 300px;
+            border-radius: 53% 47% 32% 68% / 35% 61% 39% 65%;
+            background: linear-gradient(45deg, var(--secondary), var(--primary));
+            animation: morph 12s linear infinite alternate;
+        }
+        
+        .shape-2 {
+            bottom: 20%;
+            right: 10%;
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(-45deg, var(--accent), var(--secondary));
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            animation: rotate 15s linear infinite;
+        }
+        
+        .shape-3 {
+            top: 40%;
+            right: 15%;
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(120deg, var(--primary), var(--accent));
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            animation: morph 8s linear infinite alternate-reverse;
+        }
+        
+        .shape-4 {
+            bottom: 30%;
+            left: 15%;
+            width: 180px;
+            height: 180px;
+            background: linear-gradient(60deg, var(--secondary), var(--primary));
+            clip-path: polygon(50% 0%, 90% 20%, 100% 60%, 75% 100%, 25% 100%, 0% 60%, 10% 20%);
+            animation: rotate 12s linear infinite reverse;
+        }
+        
+        @keyframes morph {
+            0% {
+                border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            }
+            25% {
+                border-radius: 58% 42% 75% 25% / 76% 46% 54% 24%;
+            }
+            50% {
+                border-radius: 50% 50% 33% 67% / 55% 27% 73% 45%;
+            }
+            75% {
+                border-radius: 33% 67% 58% 42% / 63% 68% 32% 37%;
+            }
+            100% {
+                border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            }
+        }
+        
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        
+        /* Responsive Styles */
+        @media screen and (max-width: 992px) {
+            h1 {
+                font-size: 3.5rem;
+            }
+            
+            h2 {
+                font-size: 2.5rem;
+            }
+            
+            .timeline::after {
+                left: 31px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            
+            .timeline-item:nth-child(even) {
+                left: 0;
+            }
+            
+            .timeline-item:nth-child(odd)::after,
+            .timeline-item:nth-child(even)::after {
+                left: 18px;
+            }
+        }
+        
+        @media screen and (max-width: 768px) {
+            h1 {
+                font-size: 3rem;
+            }
+            
+            .container {
+                width: 95%;
+            }
+            
+            .nav-list {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                height: 0;
+                background-color: var(--dark);
+                flex-direction: column;
+                padding: 0;
+                overflow: hidden;
+                transition: all 0.3s ease;
+            }
+            
+            .nav-list.active {
+                height: calc(100vh - 70px);
+                padding: 2rem 0;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .canvas-container {
+                height: 350px;
+            }
+        }
+        
+        @media screen and (max-width: 576px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            h2 {
+                font-size: 2rem;
+            }
+            
+            .hero {
+                text-align: center;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-form {
+                padding: 2rem;
+            }
+        }
+    </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container nav-container">
+            <a href="#" class="logo">
+                <span class="logo-shape"></span>
+                GEOMETRY
+            </a>
+            <ul class="nav-list">
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#features" class="nav-link">Elements</a></li>
+                <li><a href="#gallery" class="nav-link">Gallery</a></li>
+                <li><a href="#interactive" class="nav-link">Interactive</a></li>
+                <li><a href="#history" class="nav-link">History</a></li>
+                <li><a href="#applications" class="nav-link">Applications</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <!-- Background Video Placeholder -->
+        <img src="/api/placeholder/1920/1080" alt="Geometric Patterns in Motion" class="video-bg">
+        <div class="container hero-content">
+            <h1>The Beautiful Universe of Shapes</h1>
+            <p class="hero-subtitle">Discover the magic where mathematics meets art and science</p>
+            <div class="cta-buttons">
+                <a href="#about" class="cta-btn">Explore</a>
+                <a href="#interactive" class="cta-btn cta-secondary">Play with Shapes</a>
+            </div>
+        </div>
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <h2 class="fade-in">The Essence of Geometry</h2>
+            <div class="flex-container">
+                <div class="col-50 fade-in">
+                    <p>Geometry, from the Ancient Greek: γεωμετρία; geo- "earth", -metron "measurement", is a branch of mathematics concerned with questions of shape, size, relative position of figures, and the properties of space.</p>
+                    <p>It is one of the oldest mathematical sciences, having emerged as an organized field of study in ancient civilizations for understanding the physical world and solving practical problems.</p>
+                    <p>Today, geometry transcends its mathematical origins, influencing fields from quantum physics to architectural design, from computer graphics to the understanding of our universe.</p>
+                </div>
+                <div class="col-50 fade-in">
+                    <div class="about-image">
+                        <img src="/api/placeholder/600/400" alt="Geometric Patterns" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                </div>
+            </div>
+            <div class="shape-grid">
+                <div class="shape-card fade-in">
+                    <div class="shape-icon">
+                        <i class="fas fa-square"></i>
+                    </div>
+                    <h3>Euclidean</h3>
+                    <p>The traditional geometry of flat surfaces and three-dimensional space.</p>
+                </div>
+                <div class="shape-card fade-in">
+                    <div class="shape-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h3>Non-Euclidean</h3>
+                    <p>Geometries that violate Euclid's parallel postulate, like spherical geometry.</p>
+                </div>
+                <div class="shape-card fade-in">
+                    <div class="shape-icon">
+                        <i class="fas fa-project-diagram"></i>
+                    </div>
+                    <h3>Differential</h3>
+                    <p>Uses calculus to study curved spaces and manifolds.</p>
+                </div>
+                <div class="shape-card fade-in">
+                    <div class="shape-icon">
+                        <i class="fas fa-cube"></i>
+                    </div>
+                    <h3>Topology</h3>
+                    <p>Studies properties preserved under continuous deformations.</p>
+                </div>
+            </div>
+        </div>
+        <div class="shape shape-3"></div>
+    </section>
+
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="fade-in">Fundamental Elements</h2>
+            <p class="fade-in">Geometry is built upon fundamental elements that serve as the building blocks for more complex structures and concepts.</p>
+            
+            <div class="feature-card fade-in">
+                -<div class="feature-icon">
+                    <i class="fas fa-circle"></i>
+                </div>
+                <h3>Points & Lines</h3>
+                <p>A point represents a location in space with no size or dimension. A line extends infinitely in two directions and is formed by connecting points. These fundamental concepts form the basis of Euclidean geometry and serve as the building blocks for more complex geometric structures.</p>
+            </div>
+            
+            <div class="feature-card fade-in">
+                <div class="feature-icon">
+                    <i class="fas fa-square"></i>
+                </div>
+                <h3>Angles & Polygons</h3>
+                <p>Angles measure the space between two intersecting lines. Polygons are closed shapes formed by straight lines, from triangles (3 sides) to complex many-sided figures. The study of their properties reveals mathematical patterns that appear throughout nature and design.</p>
+            </div>
+            
+            <div class="feature-card fade-in">
+                <div class="feature-icon">
+                    <i class="fas fa-cube"></i>
+                </div>
+                <h3>Solids & Dimensions</h3>
+                <p>Three-dimensional geometry studies objects with volume, from simple cubes to complex polyhedra. Higher dimensions expand these concepts beyond our physical perception, creating mathematical frameworks crucial for modern physics and computational modeling.</p>
+            </div>
+            
+            <div class="feature-card fade-in">
+                <div class="feature-icon">
+                    <i class="fas fa-wave-square"></i>
+                </div>
+                <h3>Transformations & Symmetry</h3>
+                <p>Geometric transformations like rotation, reflection, translation, and scaling change an object's position, size, or orientation. Symmetry, a fundamental property throughout mathematics and nature, describes how shapes remain invariant under specific transformations.</p>
+            </div>
+        </div>
+        <div class="shape shape-4"></div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery" id="gallery">
+        <div class="container">
+            <h2 class="fade-in">Visual Gallery</h2>
+            <p class="fade-in">Experience the breathtaking beauty of geometric patterns and forms found throughout nature, art, architecture, and science.</p>
+            
+            <div class="gallery-grid">
+                <div class="gallery-item fade-in">
+                    <img src="/api/placeholder/500/500" alt="Geometric Art" class="gallery-img">
+                    <div class="gallery-overlay">
+                        <h3>Sacred Geometry</h3>
+                        <p>Patterns used in the design of religious structures.</p>
+                    </div>
+                </div>
+                <div class="gallery-item fade-in">
+                    <img src="/api/placeholder/500/500" alt="Architecture" class="gallery-img">
+                    <div class="gallery-overlay">
+                        <h3>Architectural Marvels</h3>
+                        <p>Geometric principles in modern architecture.</p>
+                    </div>
+                </div>
+                <div class="gallery-item fade-in">
+                    <img src="/api/placeholder/500/500" alt="Fractals" class="gallery-img">
+                    <div class="gallery-overlay">
+                        <h3>Fractal Patterns</h3>
+                        <p>Self-similar structures repeated at different scales.</p>
+                    </div>
+                </div>
+                <div class="gallery-item fade-in">
+                    <img src="/api/placeholder/500/500" alt="Natural Geometry" class="gallery-img">
+                    <div class="gallery-overlay">
+                        <h3>Nature's Mathematics</h3>
+                        <p>Geometric patterns found in the natural world.</p>
+                    </div>
+                </div>
+                <div class="gallery-item fade-in">
+                    <img src="/api/placeholder/500/500" alt="Golden Ratio" class="gallery-img">
+                    <div class="gallery-overlay">
+                        <h3>The Golden Ratio</h3>
+                        <p>The divine proportion in art and design.</p>
+                    </div>
+                </div>
+                <div class="gallery-item fade-in">
+                    <img src="/api/placeholder/500/500" alt="Islamic Patterns" class="gallery-img">
+                    <div class="gallery-overlay">
+                        <h3>Islamic Geometric Art</h3>
+                        <p>Complex tessellations in Islamic architecture.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Section -->
+    <section class="interactive" id="interactive">
+        <div class="container">
+            <h2 class="fade-in">Interactive Geometry</h2>
+            <p class="fade-in">Explore geometric principles through interactive visualizations. Create, transform, and experiment with shapes to deepen your understanding of geometric concepts.</p>
+            
+            <div class="controls">
+                <button class="control-btn">Circle</button>
+                <button class="control-btn">Triangle</button>
+                <button class="control-btn">Square</button>
+                <button class="control-btn">Pentagon</button>
+                <button class="control-btn">Hexagon</button>
+                <button class="control-btn">Rotate</button>
+                <button class="control-btn">Scale</button>
+                <button class="control-btn">Reflect</button>
+                <button class="control-btn">Reset</button>
+            </div>
+            
+            <div class="canvas-container fade-in">
+                <!-- Interactive Canvas Placeholder -->
+                <img src="/api/placeholder/800/500" alt="Interactive Geometric Playground">
+            </div>
+            
+            <audio id="background-audio" controls style="width: 100%; margin-top: 2rem;">
+                <source src="#" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+        <div class="shape shape-1"></div>
+        <div class="shape shape-3"></div>
+    </section>
+
+    <!-- History Timeline Section -->
+    <section class="history" id="history">
+        <div class="container">
+            <h2 class="fade-in">The Evolution of Geometry</h2>
+            <p class="fade-in">Trace the fascinating journey of geometric thought from ancient civilizations to modern mathematical breakthroughs.</p>
+            
+            <div class="timeline">
+                <div class="timeline-item fade-in">
+                    <div class="timeline-content">
+                        <h3 class="timeline-date">3000 BCE</h3>
+                        <h3>Ancient Beginnings</h3>
+                        <p>Early civilizations in Egypt and Mesopotamia developed practical geometry for surveying and construction, creating the foundations for systematic geometric thought.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item fade-in">
+                    <div class="timeline-content">
+                        <h3 class="timeline-date">300 BCE</h3>
+                        <h3>Euclid's Elements</h3>
+                        <p>Euclid compiled and systematized geometric knowledge in his monumental work "Elements," establishing axiomatic geometry that would dominate mathematical thought for over 2,000 years.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item fade-in">
+                    <div class="timeline-content">
+                        <h3 class="timeline-date">1600s</h3>
+                        <h3>Analytical Revolution</h3>
+                        <p>René Descartes and Pierre de Fermat developed coordinate systems, merging algebra and geometry and creating analytical geometry—a powerful new approach to solving geometric problems.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item fade-in">
+                    <div class="timeline-content">
+                        <h3 class="timeline-date">1800s</h3>
+                        <h3>Non-Euclidean Breakthrough</h3>
+                        <p>Mathematicians like Lobachevsky, Bolyai, and Riemann challenged Euclid's parallel postulate, creating revolutionary non-Euclidean geometries that would later become essential to Einstein's relativity theory.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item fade-in">
+                    <div class="timeline-content">
+                        <h3 class="timeline-date">1900s</h3>
+                        <h3>Modern Abstractions</h3>
+                        <p>The 20th century saw geometry expanding into topology, differential geometry, and algebraic geometry, providing mathematical frameworks for understanding space-time and quantum mechanics.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item fade-in">
+                    <div class="timeline-content">
+                        <h3 class="timeline-date">Present Day</h3>
+                        <h3>Computational Geometry</h3>
+                        <p>Today's geometry integrates with computer science, enabling complex visualizations, simulations, and applications in fields from artificial intelligence to medical imaging and virtual reality.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="shape shape-2"></div>
+    </section>
+
+    <!-- Applications Section -->
+    <section class="applications" id="applications">
+        <div class="container">
+            <h2 class="fade-in">Real-World Applications</h2>
+            <p class="fade-in">Geometry extends far beyond mathematical theory, shaping countless aspects of our modern world from technology to art.</p>
+            
+            <div class="app-cards">
+                <div class="app-card fade-in">
+                    <img src="/api/placeholder/400/200" alt="Architecture" class="app-img">
+                    <div class="app-content">
+                        <div class="app-icon">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <h3>Architecture & Design</h3>
+                        <p>From the ancient pyramids to modern skyscrapers, geometric principles govern structural integrity, space utilization, and aesthetic harmony in architectural design.</p>
+                    </div>
+                </div>
+                
+                <div class="app-card fade-in">
+                    <img src="/api/placeholder/400/200" alt="Computer Graphics" class="app-img">
+                    <div class="app-content">
+                        <div class="app-icon">
+                            <i class="fas fa-desktop"></i>
+                        </div>
+                        <h3>Computer Graphics</h3>
+                        <p>3D modeling, animation, and video game design rely on computational geometry to create realistic virtual environments and simulate physical interactions.</p>
+                    </div>
+                </div>
+                
+                <div class="app-card fade-in">
+                    <img src="/api/placeholder/400/200" alt="Medical Imaging" class="app-img">
+                    <div class="app-content">
+                        <div class="app-icon">
+                            <i class="fas fa-heartbeat"></i>
+                        </div>
+                        <h3>Medical Imaging</h3>
+                        <p>CT scans, MRIs, and ultrasound technologies use geometric algorithms to construct detailed 3D visualizations of internal organs and tissues from 2D image slices.</p>
+                    </div>
+                </div>
+                
+                <div class="app-card fade-in">
+                    <img src="/api/placeholder/400/200" alt="Navigation" class="app-img">
+                    <div class="app-content">
+                        <div class="app-icon">
+                            <i class="fas fa-map-marked-alt"></i>
+                        </div>
+                        <h3>Navigation Systems</h3>
+                        <p>GPS and mapping technologies use spherical geometry and projection methods to represent Earth's curved surface on flat screens and calculate optimal routes.</p>
+                    </div>
+                </div>
+                
+                <div class="app-card fade-in">
+                    <img src="/api/placeholder/400/200" alt="Physics" class="app-img">
+                    <div class="app-content">
+                        <div class="app-icon">
+                            <i class="fas fa-atom"></i>
+                        </div>
+                        <h3>Physics & Cosmology</h3>
+                        <p>Einstein's general relativity describes gravity as geometric curvature of spacetime, while string theory proposes tiny geometric structures underlying all matter and energy.</p>
+                    </div>
+                </div>
+                
+                <div class="app-card fade-in">
+                    <img src="/api/placeholder/400/200" alt="Art" class="app-img">
+                    <div class="app-content">
+                        <div class="app-icon">
+                            <i class="fas fa-palette"></i>
+                        </div>
+                        <h3>Art & Design</h3>
+                        <p>From Renaissance perspective techniques to modern digital design, geometric principles guide composition, proportion, symmetry, and visual harmony in artistic expression.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="shape shape-4"></div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2 class="fade-in">Connect With Us</h2>
+            <p class="fade-in">Have questions about geometry or want to share your own geometric discoveries? Reach out to our community of geometry enthusiasts!</p>
+            
+            <form class="contact-form fade-in">
+                <div class="form-group">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" id="name" class="form-input" placeholder="Your name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" id="email" class="form-input" placeholder="Your email address" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="subject" class="form-label">Subject</label>
+                    <input type="text" id="subject" class="form-input" placeholder="Message subject">
+                </div>
+                
+                <div class="form-group">
+                    <label for="message" class="form-label">Message</label>
+                    <textarea id="message" class="form-input form-textarea" placeholder="Your message" required></textarea>
+                </div>
+                
+                <button type="submit" class="form-btn">Send Message</button>
+            </form>
+        </div>
+        <div class="shape shape-1"></div>
+        <div class="shape shape-3"></div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3 class="footer-title">GEOMETRY</h3>
+                    <p>Exploring the beautiful universe of shapes, patterns, and spatial relationships that define our world.</p>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3 class="footer-title">Explore</h3>
+                    <ul class="footer-links">
+                        <li class="footer-link"><a href="#about">About Geometry</a></li>
+                        <li class="footer-link"><a href="#features">Elements</a></li>
+                        <li class="footer-link"><a href="#gallery">Visual Gallery</a></li>
+                        <li class="footer-link"><a href="#interactive">Interactive Tools</a></li>
+                        <li class="footer-link"><a href="#history">Historical Timeline</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3 class="footer-title">Resources</h3>
+                    <ul class="footer-links">
+                        <li class="footer-link"><a href="#">Geometry Articles</a></li>
+                        <li class="footer-link"><a href="#">Video Tutorials</a></li>
+                        <li class="footer-link"><a href="#">Problem Sets</a></li>
+                        <li class="footer-link"><a href="#">Educational Tools</a></li>
+                        <li class="footer-link"><a href="#">Research Papers</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3 class="footer-title">Newsletter</h3>
+                    <p>Subscribe to our newsletter for the latest updates on geometric discoveries and applications.</p>
+                    <form>
+                        <div class="form-group">
+                            <input type="email" class="form-input" placeholder="Your email address" required>
+                        </div>
+                        <button type="submit" class="form-btn">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2025 GEOMETRY. All rights reserved. | Created with passion for mathematical beauty.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu Toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const navList = document.querySelector('.nav-list');
+            
+            mobileMenuBtn.addEventListener('click', function() {
+                navList.classList.toggle('active');
+                const icon = mobileMenuBtn.querySelector('i');
+                if (icon.classList.contains('fa-bars')) {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                } else {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            });
+            
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    navList.classList.remove('active');
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+            
+            // Scroll animations
+            const fadeElements = document.querySelectorAll('.fade-in');
+            
+            function checkFade() {
+                fadeElements.forEach(element => {
+                    const elementTop = element.getBoundingClientRect().top;
+                    const windowHeight = window.innerHeight;
+                    
+                    if (elementTop < windowHeight - 100) {
+                        element.classList.add('active');
+                    }
+                });
+            }
+            
+            // Initial check
+            checkFade();
+            
+            // Check on scroll
+            window.addEventListener('scroll', checkFade);
+            
+            // Basic interactive canvas placeholder
+            const canvas = document.createElement('canvas');
+            const canvasContainer = document.querySelector('.canvas-container');
+            const controls = document.querySelectorAll('.control-btn');
+            
+            if (canvasContainer.querySelector('img')) {
+                canvasContainer.removeChild(canvasContainer.querySelector('img'));
+            }
+            
+            canvas.width = canvasContainer.offsetWidth;
+            canvas.height = canvasContainer.offsetHeight;
+            canvasContainer.appendChild(canvas);
+            
+            const ctx = canvas.getContext('2d');
+            let currentShape = 'Circle';
+            let rotation = 0;
+            let scale = 1;
+            let isReflected = false;
+            
+            function drawShape() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                ctx.save();
+                ctx.translate(canvas.width / 2, canvas.height / 2);
+                ctx.rotate(rotation * Math.PI / 180);
+                ctx.scale(scale * (isReflected ? -1 : 1), scale);
+                
+                ctx.strokeStyle = '#917fb3';
+                ctx.lineWidth = 5;
+                ctx.fillStyle = 'rgba(253, 226, 243, 0.2)';
+                
+                switch(currentShape) {
+                    case 'Circle':
+                        ctx.beginPath();
+                        ctx.arc(0, 0, 100, 0, Math.PI * 2);
+                        ctx.fill();
+                        ctx.stroke();
+                        break;
+                    case 'Triangle':
+                        ctx.beginPath();
+                        ctx.moveTo(0, -100);
+                        ctx.lineTo(-100, 86.6);
+                        ctx.lineTo(100, 86.6);
+                        ctx.closePath();
+                        ctx.fill();
+                        ctx.stroke();
+                        break;
+                    case 'Square':
+                        ctx.beginPath();
+                        ctx.rect(-70.7, -70.7, 141.4, 141.4);
+                        ctx.fill();
+                        ctx.stroke();
+                        break;
+                    case 'Pentagon':
+                        ctx.beginPath();
+                        for (let i = 0; i < 5; i++) {
+                            const angle = (i * 2 * Math.PI / 5) - Math.PI / 2;
+                            const x = 100 * Math.cos(angle);
+                            const y = 100 * Math.sin(angle);
+                            if (i === 0) ctx.moveTo(x, y);
+                            else ctx.lineTo(x, y);
+                        }
+                        ctx.closePath();
+                        ctx.fill();
+                        ctx.stroke();
+                        break;
+                    case 'Hexagon':
+                        ctx.beginPath();
+                        for (let i = 0; i < 6; i++) {
+                            const angle = (i * 2 * Math.PI / 6);
+                            const x = 100 * Math.cos(angle);
+                            const y = 100 * Math.sin(angle);
+                            if (i === 0) ctx.moveTo(x, y);
+                            else ctx.lineTo(x, y);
+                        }
+                        ctx.closePath();
+                        ctx.fill();
+                        ctx.stroke();
+                        break;
+                }
+                
+                ctx.restore();
+            }
+            
+            controls.forEach(button => {
+                button.addEventListener('click', function() {
+                    const action = this.textContent;
+                    
+                    switch(action) {
+                        case 'Circle':
+                        case 'Triangle':
+                        case 'Square':
+                        case 'Pentagon':
+                        case 'Hexagon':
+                            currentShape = action;
+                            break;
+                        case 'Rotate':
+                            rotation += 45;
+                            break;
+                        case 'Scale':
+                            scale = scale === 1 ? 1.5 : scale === 1.5 ? 0.7 : 1;
+                            break;
+                        case 'Reflect':
+                            isReflected = !isReflected;
+                            break;
+                        case 'Reset':
+                            currentShape = 'Circle';
+                            rotation = 0;
+                            scale = 1;
+                            isReflected = false;
+                            break;
+                    }
+                    
+                    drawShape();
+                });
+            });
+                        drawShape();
+            
+            window.addEventListener('resize', function() {
+                canvas.width = canvasContainer.offsetWidth;
+                canvas.height = canvasContainer.offsetHeight;
+                drawShape();
+            });
+        });
+    </script>
+</body>
+</html>
